@@ -26,9 +26,7 @@ This tutorial outlines the prerequisites and installation of the open-source hel
 
 <h2>Installation Steps</h2>
 <p>
-Once the Windows 10 VM has been set up in Azure, log into the machine with your credentials. It is best to create a notepad and save a copy of any credentials used along the way for this lab, as there'll be many.
-Within the VM, open the Microsoft Edge web browser and download <a href= https://drive.google.com/uc?export=download&id=1b3RBkXTLNGXbibeMuAynkfzdBC1NnqaD>osTicket-Installation-Files.zip</a>. Extract the files and you should see the following.
-
+Once your Windows 10 virtual machine is running in Azure, log in using your credentials.  (Remember to keep a record of all usernames and passwords used during this lab, as you'll need them later.)  Open the Edge browser within the VM and download the osTicket installation files from this link. After the download is complete, extract the contents of the zip file. You should see the following files
 </p>
 <br />
 
@@ -38,7 +36,7 @@ Within the VM, open the Microsoft Edge web browser and download <a href= https:/
 
 
 <p>
-Now we'll need to enable Internet Information Services. You can search for Control Panel in the search bar at the bottom, then click Uninstall a Program, then Turn Windows features on or off, then check the box next to Internet Information Services. We'll also need to enable CGI under World Wide Wide Services -> Application Development Features.
+Enable Internet Information Services (IIS) by going to Control Panel > Uninstall a program > Turn Windows features on or off.  Make sure to also enable CGI under World Wide Web Services > Application Development Features.
 </p>
 <br />
 
@@ -47,14 +45,16 @@ Now we'll need to enable Internet Information Services. You can search for Contr
 </p>
 <br/>
 <p>
-Once that's done, we can install the PHP manager for IIS. Open on the file and click OK to all the default selections. Do the same thing for the rewrite modules (rewrite_amd64 file).
+Install the PHP Manager for IIS by running the downloaded installer and accepting the default options. Similarly, install the rewrite modules by running the rewrite_amd64 installer with default settings.
+
+
 </p>
 <img src="https://i.imgur.com/Uh4Zwlj.png" height="80%" width="80%" alt="install php manager and rewrite"/>
 
 <br />
 
 <p>
-Now we'll create a directory in C:\ called PHP, basically C:\PHP. Click on the folder at the bottom the Taskbar or search for File Explorer. This is so that we can extract the zipped PHP folder into this new directory and allow osTicket to work with PHP.
+Create a new folder named "PHP" in the C:\ drive (C:\PHP). You can access the drive through File Explorer. This folder will store the extracted PHP files, which are essential for osTicket to function correctly.
 </p>
 <p>
   <img src="https://i.imgur.com/BCMLUId.png" height="80%" width="80%" alt="extract php to c php"/>
@@ -62,8 +62,7 @@ Now we'll create a directory in C:\ called PHP, basically C:\PHP. Click on the f
 <br/>
 
 <p>
-Next install the redistributable and accept all defaults. Then install MySQL, select Standard Configuration and then enter root and root as the username and password. This is just for simplicity and you'd likely use a stronger password in real life.
-  
+Install the  Redistributable package with default settings. Then install MySQL using the "Standard Configuration" option. For simplicity, set the username and password to "root" during the MySQL installation (in a real-world scenario, use a stronger password).
 </p>
 <p>
   <img src="https://i.imgur.com/dbDt0um.png" height="50%" width="50%" alt="install redistr and mysql"/>
@@ -71,7 +70,7 @@ Next install the redistributable and accept all defaults. Then install MySQL, se
 <br/>
 
 <p>
-Now open Internet Information Services, type IIS in the search bar and then Run as administrator. Click on PHP manager then register new PHP version. Select C:\PHP\php-cgi.exe
+Open Internet Information Services (IIS) as administrator (search for "IIS" and select "Run as administrator").  In IIS Manager, click on "PHP Manager" and then "Register new PHP version." Select the  C:\PHP\php-cgi.exe file.
   
 </p>
 <p>
@@ -80,7 +79,7 @@ Now open Internet Information Services, type IIS in the search bar and then Run 
 <br/>
 
 <p>
-Reload IIS by clicking stop then start on the right hand side. This will help load the new PHP version.
+To apply the PHP configuration changes, you need to restart IIS. In the Actions pane on the right-hand side of the IIS Manager window, click "Stop" to stop the IIS service. Then, click "Start" to restart it. This will load the new PHP version you just registered.
 </p>
 <p>
   <img src="https://i.imgur.com/iO7K6aO.png" height="30%" width="30%" alt="reload IIS"/>
@@ -88,7 +87,7 @@ Reload IIS by clicking stop then start on the right hand side. This will help lo
 <br/>
 
 <p>
-Extract the osticket zipped folder and move the extracted upload folder into C:\inetpub\wwwwroot, then rename upload to osTicket (it must be exact).
+Extract the contents of the osTicket zip file. Move the upload folder from the extracted files to C:\inetpub\wwwroot and rename it to osTicket (it must  be exact).
   
 </p>
 <p>
@@ -118,13 +117,14 @@ Now we have to rename C:\inetpub\wwwroot\osTicket\include\ost-sampleconfig.php t
 </p>
 <br/>
 <p>
-Now back to osTicket on the browser, click Continue and fill in the details that you want to use as login and password for the helpdesk system. The only caveat is the MySQL database name is osTicket and the username and password must be root and root. Before clicking continue on this, go back to the original extracted folder and install HeidiSQL. Accept all defaults and when it comes to creating a new session, select new and then login into the sql database with root and root credentials. Then right click on Unnamed -> Create new -> Database. The name must be exactly osTicket.
+In the osTicket setup page, click "Continue" and fill in the desired login details for the helpdesk.  Ensure the MySQL database name is "osTicket" and the username/password are "root"/"root". Before proceeding, install HeidiSQL from the extracted osTicket files, accepting all defaults. Create a new session in HeidiSQL, connect to the database with "root"/"root", and create a new database named "osTicket".
 </p>
 <p>
   <img src="https://i.imgur.com/Lfw0PXJ.png" height="80%" width="80%" alt="heidisql"/>
   <img src="https://i.imgur.com/pWKEjjz.png" height="80%" width="80%" alt="create new database in heidisql"/>
 </p>
-Continue with the installation of osTicket in the browser by clicking Install Now. You should now seeing the page telling you that osTicket is finally installed and all the links to login into the osTicket as a general user (http://localhost/osTicket) or as staff (http://localhost/osTicket/scp).
+On the osTicket setup page, click "Install Now" to complete the installation. You'll be presented with a confirmation page containing links to access osTicket as a user (
+http://localhost/osTicket) or as staff (http://localhost/osTicket/scp).
 <br/>
 <p>
    <img src="https://i.imgur.com/CBKO7Qs.png" height="80%" width="80%" alt="osticket installed"/>
